@@ -1,0 +1,40 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Setup Spring Boot
+    init: |
+      mkdir -p /workspace/app/backend
+      cd /workspace/app/backend
+      curl https://start.spring.io/starter.zip -d language=java \
+        -d type=maven-project \
+        -d dependencies=web,data-jpa,postgresql,lombok,validation \
+        -d packageName=com.yourdomain.solar \
+        -d name=solar-system-monitor \
+        -d description="Solar System Monitoring Application" \
+        -d groupId=com.yourdomain \
+        -d artifactId=solar-system-monitor \
+        -d version=0.0.1-SNAPSHOT \
+        -d javaVersion=17 \
+        -o backend.zip
+      unzip backend.zip
+      rm backend.zip
+      ./mvnw clean install
+    command: |
+      cd /workspace/app/backend
+      ./mvnw spring-boot:run
+
+ports:
+  - port: 8080
+    onOpen: notify
+  - port: 5432
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - vscjava.vscode-java-pack
+    - redhat.java
+    - pivotal.vscode-spring-boot
+    - vmware.vscode-spring-boot-dashboard
+    - vscjava.vscode-spring-boot-dashboard
+    - vscjava.vscode-maven
