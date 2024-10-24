@@ -1,14 +1,26 @@
-FROM eclipse-temurin:17-jdk-alpine as build
+# Build stage
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /workspace/app
 
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
-COPY src src
+# Copy Maven wrapper and POM first for better caching
+COPY .mvn/ .mvn/
+COPY mvnw pom.xml ./
 
+# Ensure Maven wrapper is executable
 RUN chmod +x mvnw
-RUN ./mvnw install -DskipTests
+# Download dependencies (this layer will be cached)
+RUN ./mvnw dependency:go-offline
 
-FROM eclipse-temurin:17-jre-alpine
+# Copy source code and build
+COPY src ./src
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
 COPY --from=build /workspace/app/target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+# Set Java options for containerized environment
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75"
+
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

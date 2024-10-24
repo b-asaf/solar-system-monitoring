@@ -1,0 +1,22 @@
+tasks:
+  - init: |
+      sdk install java 21.0.2-tem
+      sdk use java 21.0.2-tem
+      sdk default java 21.0.2-tem
+      cd backend
+      ./mvnw clean install
+    command: |
+      cd backend
+      java -version
+      ./mvnw spring-boot:run
+
+ports:
+  - port: 8080
+    onOpen: open-preview
+  - port: 5432
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - vscjava.vscode-java-pack
+    - pivotal.vscode-spring-boot
