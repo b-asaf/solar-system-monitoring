@@ -1,5 +1,6 @@
 tasks:
-  - init: |
+  - name: Backend Services
+    init: | 
       sdk install java 21.0.2-tem
       sdk use java 21.0.2-tem
       sdk default java 21.0.2-tem
@@ -8,7 +9,13 @@ tasks:
     command: |
       cd backend
       java -version
-      ./mvnw spring-boot:run
+      cd ..
+      docker-compose up --build
+
+  - name: Backend Terminal
+    command: |
+      cd backend
+      git status
 
 ports:
   - port: 8080
