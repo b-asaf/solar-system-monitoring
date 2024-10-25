@@ -12,11 +12,6 @@ tasks:
       cd ..
       docker-compose up --build
 
-  - name: Backend Terminal
-    command: |
-      cd backend
-      git status
-
 ports:
   - port: 8080
     onOpen: open-preview
