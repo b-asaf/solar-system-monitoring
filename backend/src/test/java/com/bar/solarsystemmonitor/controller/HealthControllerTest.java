@@ -1,4 +1,3 @@
-// backend/src/test/java/com/bar/solarsystemmonitor/controller/HealthControllerTest.java
 package com.bar.solarsystemmonitor.controller;
 
 import org.junit.jupiter.api.Test;
