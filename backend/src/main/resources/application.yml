@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: solar-system-monitoring
+
+# Swagger UI configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
