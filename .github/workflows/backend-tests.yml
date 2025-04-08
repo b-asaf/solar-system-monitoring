@@ -23,8 +23,23 @@ jobs:
           distribution: "temurin"
           cache: maven
 
-      - name: Grant execute permission for Maven wrapper
-        run: chmod +x ./mvnw
-
       - name: Run Tests
         run: ./mvnw test
+
+      - name: Report Status
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const conclusion = context.job.status;
+            await github.rest.checks.create({
+              ...context.repo,
+              name: 'Backend Tests',
+              head_sha: context.sha,
+              status: 'completed',
+              conclusion: conclusion.toLowerCase(),
+              output: {
+                title: 'Test Results',
+                summary: `Backend tests ${conclusion}`
+              }
+            });
