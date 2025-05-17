@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- If you need clarificatinos please ask me for them before you start coding
+- ** Don't over-engineer **, use SOLID, KISS and DRY principles throught your code!
+- Make sure you always perform code houskeeping, especially when you revert your code. For example, cleanup un-used imports that perhaps an earlier change you've made added.
+- Respect my prettier formatting preferences when you provide code.
+- when in a *.java file, make sure you write in syntax for JDK 8
+- when in React/Solid files always use functional components
+- when composing a docker, the target is to make the images as slim as possible while keeping it  robust.
+- always stick to your task, if you want to suggests more, please do so by asking me.
+- Don't add comments that describe what you just did, use declartive names for files, namespaces, classes, variables, functions instead
+- When in composer or in chat, give me follow up instatructions, so I can responsed very quickly
+- Make sure to add/update relevant github actions steps for each repos so every PR will pass relevant tests
+- Update the Readme files, so it will be clear on how to run each repo individually and how to run the project as a whole for someone who is not a SW developer
+
