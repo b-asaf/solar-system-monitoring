@@ -1,15 +1,14 @@
 version: "3.8"
 
 services:
-  backend:
+  backend-test:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: solar-system-backend
-    ports:
-      - "8080:8080"
+    container_name: solar-system-backend-test
+    command: ["./mvnw", "test"]
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SOLAREDGE_SITE_ID=${SOLAREDGE_SITE_ID}
       - SOLAREDGE_API_KEY=${SOLAREDGE_API_KEY}
-      - SOLAREDGE_API_URL=${SOLAREDGE_API_URL}
+      - SOLAREDGE_API_URL=${SOLAREDGE_API_URL} 

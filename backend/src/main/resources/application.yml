@@ -1,6 +1,18 @@
 spring:
   application:
     name: solar-system-monitoring
+  config:
+    import: optional:file:.env
+
+solaredge:
+  api:
+    url: https://monitoringapi.solaredge.com
+    key: ${SOLAREDGE_API_KEY}
+  site:
+    id: ${SOLAREDGE_SITE_ID}
+
+server:
+  port: ${SERVER_PORT:8080}
 
 # Swagger UI configuration
 springdoc:

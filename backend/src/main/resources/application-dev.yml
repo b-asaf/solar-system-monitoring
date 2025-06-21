@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: optional:file:.env
+
+solaredge:
+  api:
+    url: https://monitoringapi.solaredge.com
+    key: ${SOLAREDGE_API_KEY:dev_api_key}
+  site:
+    id: ${SOLAREDGE_SITE_ID:dev_site_id}
+
+server:
+  port: ${SERVER_PORT:8080} 
