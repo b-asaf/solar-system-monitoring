@@ -25,13 +25,13 @@ This project monitors solar system data and integrates with SolarEdge.
    If you do not set these, the backend will return mock data in dev mode.
 
 3. **Run the backend in dev mode:**
-   - **Option 1: Regular Maven Command**
-     ```sh
-     ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
-     ```
-   - **Option 2: Windows Script**
+   - **Option 1: Windows Script**
      ```sh
      scripts\run-dev.bat
+     ```
+   - **Option 2: Regular Maven Command**
+     ```sh
+     ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
      ```
      This script will automatically run the application with the dev profile.
 
@@ -59,9 +59,9 @@ This project monitors solar system data and integrates with SolarEdge.
 
 Interactive API documentation is available via Swagger UI.
 
-- When the backend is running, open your browser and go to:
-  - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-  - or [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- When the backend is running, open your browser and go to 1 of the 2 options:
+  1. [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+  2. [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 You can use this interface to explore, test, and understand all available API endpoints.
 
