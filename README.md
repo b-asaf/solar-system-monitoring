@@ -3,67 +3,24 @@
 This project monitors solar system data and integrates with SolarEdge.
 
 ## Prerequisites
-- Java 21 or higher
-- Maven 3.8+
-- (For production) Docker
 
-## Project Structure
-- `backend/` - Spring Boot backend
-- `documentation/` - PRDs for project, backend, and frontend
+- Java Development Kit (JDK) 21
+- Maven (included via wrapper)
+- Docker Desktop (optional, for containerized running)
+- Git
 
-## Running in Development Mode (dev)
+## Quick Start
 
-1. **Navigate to the backend directory:**
-   ```sh
-   cd backend
-   ```
-2. **(Optional) Set environment variables for real SolarEdge API access:**
-   - `SOLAREDGE_SITE_ID`
-   - `SOLAREDGE_API_KEY`
-   - `SOLAREDGE_API_URL`
-   
-   If you do not set these, the backend will return mock data in dev mode.
+1. Clone the repository:
 
-3. **Run the backend in dev mode:**
-   - **Option 1: Windows Script**
-     ```sh
-     scripts\run-dev.bat
-     ```
-   - **Option 2: Regular Maven Command**
-     ```sh
-     ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
-     ```
-     This script will automatically run the application with the dev profile.
+```bash
+git clone https://github.com/YOUR_USERNAME/solar-system-monitoring.git
+cd solar-system-monitoring
+```
 
-   The backend will be available at `http://localhost:8080` by default.
-   Endpoints will return mock data if no API keys are set.
-
-## Running in Production (Docker)
-
-1. **Make sure you have Docker installed and running.**
-2. **Make sure you are in the root directory of the application**
-3. **Set environment variables for SolarEdge API access:**
-   - `SOLAREDGE_SITE_ID`
-   - `SOLAREDGE_API_KEY`
-   - `SOLAREDGE_API_URL`
-   
-   You can set these in your shell or in the `docker-compose.yml` file.
-
-4. **Build and run the containers:**
-   ```sh
-   docker-compose up --build
-   ```
-   - The backend will run in production mode and connect to the real SolarEdge API.
-
-## API Documentation (Swagger / OpenAPI)
-
-Interactive API documentation is available via Swagger UI.
-
-- When the backend is running, open your browser and go to 1 of the 2 options:
-  1. [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-  2. [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-
-You can use this interface to explore, test, and understand all available API endpoints.
+2. Choose your preferred way to run:
+   - See `backend/README.md` for backend setup and running instructions
+   - Frontend coming soon...
 
 ## Documentation
 - See the `documentation/` folder for PRDs:
@@ -71,5 +28,4 @@ You can use this interface to explore, test, and understand all available API en
   - `PRD-BE.md` - Backend PRD
   - `PRD-FE.md` - Frontend PRD
 
----
-For any issues or questions, please open an issue or contact the maintainer.
+- Backend API (when running): http://localhost:8080/swagger-ui.html
