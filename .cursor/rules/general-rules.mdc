@@ -15,4 +15,4 @@ alwaysApply: true
 - When in composer or in chat, give me follow up instatructions, so I can responsed very quickly
 - Make sure to add/update relevant github actions steps for each repos so every PR will pass relevant tests
 - Update the Readme files, so it will be clear on how to run each repo individually and how to run the project as a whole for someone who is not a SW developer
-
+- Before every task is being implemented read All PRDs and make sure you understand the task and the requirements and if the task contredicts any of the PRDs, please ask me for clarification.
