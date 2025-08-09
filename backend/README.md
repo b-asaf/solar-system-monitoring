@@ -6,25 +6,21 @@ Spring Boot backend service for the Solar System Monitoring project.
 
 ### Option 1: Local Development
 
-1. Navigate to backend directory:
+1. Navigate to backend/scripts directory:
 
 ```bash
-cd backend
+cd backend/scripts
 ```
 
 2. Start the application:
 
 ```bash
-# On Windows:
-mvnw.cmd spring-boot:run
-
-# On Unix/Mac:
-./mvnw spring-boot:run
+run-dev.bat
 ```
 
 3. Access the endpoints:
 
-- Test endpoint: http://localhost:8080/test
+- Main API: http://localhost:8080
 - Swagger UI: http://localhost:8080/swagger-ui.html
 - API Docs: http://localhost:8080/api-docs
 
@@ -33,14 +29,7 @@ mvnw.cmd spring-boot:run
 From the project root directory:
 
 ```bash
-# Build and start the application:
-docker-compose up --build
-
-# To run in detached mode (background):
-docker-compose up -d
-
-# To stop the application:
-docker-compose down
+docker-compose up backend
 ```
 
 ## Running Tests
@@ -49,34 +38,11 @@ docker-compose down
 
 ```bash
 cd backend
-# On Windows:
-mvnw.cmd test
-
-# On Unix/Mac:
 ./mvnw test
 ```
 
 ### Docker Testing
 
 ```bash
-# Run tests in Docker:
 docker-compose up backend-test
-
-# To stop after tests:
-docker-compose down
-```
-
-## Environment Variables
-
-The application supports different profiles:
-- `default`: Used for local development
-- `docker`: Used when running in Docker
-
-You can set the profile using:
-```bash
-# For local development:
-set SPRING_PROFILES_ACTIVE=default
-
-# For Docker:
-set SPRING_PROFILES_ACTIVE=docker
 ```
