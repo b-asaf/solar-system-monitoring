@@ -14,7 +14,7 @@ public class SolarEdgeService {
     private final String siteId;
     private final String apiKey;
     private final String apiUrl;
-    private final boolean isDev;
+    private final boolean mockModeEnabled;
 
     public SolarEdgeService(
             @Value("${solaredge.api.url:}") String apiUrl,
@@ -25,11 +25,12 @@ public class SolarEdgeService {
         this.apiUrl = apiUrl;
         this.siteId = siteId;
         this.apiKey = apiKey;
-        this.isDev = activeProfile.contains("dev");
+        String profiles = activeProfile == null ? "" : activeProfile;
+        this.mockModeEnabled = profiles.contains("dev") || profiles.contains("test");
     }
 
     public SiteData getSiteData() {
-        if (isDev) {
+        if (mockModeEnabled) {
             return mockSiteData();
         }
         String url = String.format("%s/site/%s/overview?api_key=%s", apiUrl, siteId, apiKey);
@@ -37,7 +38,7 @@ public class SolarEdgeService {
     }
 
     public SiteData getSitePower() {
-        if (isDev) {
+        if (mockModeEnabled) {
             return mockSiteData();
         }
         String url = String.format("%s/site/%s/power?api_key=%s", apiUrl, siteId, apiKey);
