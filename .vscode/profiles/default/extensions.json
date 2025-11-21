@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "github.copilot",
+    "github.copilot-chat",
+    "ionutvmi.path-autocomplete",
+    "ms-azuretools.vscode-containers",
+    "ms-azuretools.vscode-docker",
+    "docker.docker",
+    "rangav.vscode-thunder-client",
+    "streetsidesoftware.code-spell-checker",
+    "visualstudioexptteam.vscodeintellicode",
+    "visualstudioexptteam.intellicode-api-usage-examples",
+    "naumovs.color-highlight"
+  ]
+}

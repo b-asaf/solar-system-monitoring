@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/target": true,
+      "**/node_modules": true
+    },
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cSpell.words": [
+      "databind",
+      "Dotenv",
+      "fasterxml",
+      "paulschwarz",
+      "projectlombok",
+      "projectreactor",
+      "solaredge",
+      "springdoc",
+      "springframework",
+      "webflux",
+      "webmvc"
+    ]
+  }
+}

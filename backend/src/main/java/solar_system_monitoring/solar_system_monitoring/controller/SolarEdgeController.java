@@ -3,7 +3,8 @@ package solar_system_monitoring.solar_system_monitoring.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import solar_system_monitoring.solar_system_monitoring.domain.model.SiteData;
+import io.swagger.v3.oas.annotations.Operation;
+import reactor.core.publisher.Mono;
 import solar_system_monitoring.solar_system_monitoring.service.SolarEdgeService;
 import lombok.RequiredArgsConstructor;
 
@@ -13,13 +14,14 @@ import lombok.RequiredArgsConstructor;
 public class SolarEdgeController {
     private final SolarEdgeService solarEdgeService;
 
-    @GetMapping("/site")
-    public SiteData getSiteData() {
-        return solarEdgeService.getSiteData();
+    @GetMapping("/overview")
+    @Operation(summary = "Get site overview", description = "Fetch site overview data from SolarEdge API")
+    public Mono<String> getSiteOverview() {
+        return solarEdgeService.fetchSiteOverview();
     }
 
-    @GetMapping("/site/power")
-    public SiteData getSitePower() {
-        return solarEdgeService.getSitePower();
-    }
-} 
+    // @GetMapping("/site/power")
+    // public SiteData getSitePower() {
+    // return solarEdgeService.getSitePower();
+    // }
+}

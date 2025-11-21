@@ -1,72 +1,74 @@
 package solar_system_monitoring.solar_system_monitoring.service;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import solar_system_monitoring.solar_system_monitoring.domain.model.SiteData;
-import solar_system_monitoring.solar_system_monitoring.domain.model.SiteOverview;
-import solar_system_monitoring.solar_system_monitoring.domain.model.PowerData;
+import reactor.core.publisher.Mono;
+import solar_system_monitoring.solar_system_monitoring.client.SolarEdgeApiClient;
+import solar_system_monitoring.solar_system_monitoring.exception.SolarEdgeApiException;
 
+@Slf4j
 @Service
 public class SolarEdgeService {
-    private final RestTemplate restTemplate;
-    private final String siteId;
-    private final String apiKey;
-    private final String apiUrl;
-    private final boolean mockModeEnabled;
+    private final SolarEdgeApiClient solarEdgeApiClient;
+    private final ObjectMapper objectMapper;
 
     public SolarEdgeService(
-            @Value("${solaredge.api.url:}") String apiUrl,
-            @Value("${solaredge.site.id:}") String siteId,
-            @Value("${solaredge.api.key:}") String apiKey,
-            @Value("${spring.profiles.active:}") String activeProfile) {
-        this.restTemplate = new RestTemplate();
-        this.apiUrl = apiUrl;
-        this.siteId = siteId;
-        this.apiKey = apiKey;
-        String profiles = activeProfile == null ? "" : activeProfile;
-        this.mockModeEnabled = profiles.contains("dev") || profiles.contains("test");
+            SolarEdgeApiClient solarEdgeApiClient,
+            ObjectMapper objectMapper) {
+        this.solarEdgeApiClient = solarEdgeApiClient;
+        this.objectMapper = objectMapper;
+        log.info("SolarEdgeService initialized");
     }
 
-    public SiteData getSiteData() {
-        if (mockModeEnabled) {
-            return mockSiteData();
+    public Mono<Boolean> healthCheck() {
+        log.info("Performing solarEdge API health check");
+        return solarEdgeApiClient.getSiteOverview()
+                .map(response -> {
+                    log.info("Health check passed");
+                    return true;
+                })
+                .doOnError(error -> {
+                    log.error("Health check failed: {}", error.getMessage());
+                })
+                .onErrorReturn(false);
+    }
+
+    public Mono<String> fetchSiteOverview() {
+        log.info("Fetching site overview from solarEdge API");
+
+        return solarEdgeApiClient.getSiteOverview()
+                .map(this::validateAndLogResponse)
+                .doOnSuccess(data -> {
+                    log.info("Successfully fetch site overview");
+                })
+                .doOnError(error -> {
+                    log.error("Error fetching site overview: {}", error.getMessage(), error);
+                });
+    }
+
+    private String validateAndLogResponse(String response) {
+        try {
+            log.debug("Validating JSON response");
+            JsonNode root = objectMapper.readTree(response);
+
+            if (root.has("error")) {
+                String error = root.path("error").asText();
+                log.error("API returned error: {}", error);
+                throw new SolarEdgeApiException("SolarEdge API error:" + error);
+            }
+
+            if (root.isEmpty()) {
+                log.warn("Empty response from SolarEdge API");
+                throw new SolarEdgeApiException("Empty response from SolarEdge API");
+            }
+
+            return response;
+        } catch (Exception e) {
+            log.error("Response validation failed: {}", e.getMessage(), e);
+            throw new SolarEdgeApiException("Response validation failed", e);
         }
-        String url = String.format("%s/site/%s/overview?api_key=%s", apiUrl, siteId, apiKey);
-        return restTemplate.getForObject(url, SiteData.class);
     }
 
-    public SiteData getSitePower() {
-        if (mockModeEnabled) {
-            return mockSiteData();
-        }
-        String url = String.format("%s/site/%s/power?api_key=%s", apiUrl, siteId, apiKey);
-        return restTemplate.getForObject(url, SiteData.class);
-    }
-
-    private SiteData mockSiteData() {
-        SiteOverview overview = new SiteOverview(
-            "dev-site-id",
-            "Dev Solar Site",
-            "dev-account-id",
-            "active",
-            "10kW",
-            "2024-06-21T12:00:00Z",
-            "2023-01-01",
-            "2023-02-01",
-            "Development mock site",
-            "residential",
-            "MonoPERC",
-            "http://localhost",
-            "public"
-        );
-        PowerData power = new PowerData(
-            "kW",
-            "[1,2,3,4,5]",
-            "HOUR",
-            "5"
-        );
-        return new SiteData(overview, power);
-    }
-} 
+}

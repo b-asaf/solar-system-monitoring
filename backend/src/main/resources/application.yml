@@ -6,10 +6,17 @@ spring:
 
 solaredge:
   api:
-    url: https://monitoringapi.solaredge.com
-    key: ${SOLAREDGE_API_KEY}
-  site:
-    id: ${SOLAREDGE_SITE_ID}
+    base-url: https://monitoringapi.solaredge.com
+    version: v1    # API version
+    api-key: ${SOLAREDGE_API_KEY:default_api_key}
+    site-id: ${SOLAREDGE_SITE_ID:default_site_id}
+
+logging:
+  file:
+    name: logs\solar-system-monitoring.log
+  level:
+    root: DEBUG
+    solar_system_monitoring: INFO
 
 server:
   port: ${SERVER_PORT:8080}
