@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "christian-kohler.path-intellisense",
+    "coderabbitai.coderabbit",
     "esbenp.prettier-vscode",
     "github.copilot",
     "github.copilot-chat",
