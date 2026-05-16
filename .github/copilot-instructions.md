@@ -10,8 +10,44 @@ Whenever the user starts a prompt with a role trigger, you must completely assum
 - **Trigger: "Summon Developer"** -> Read `agents/roles/backend_agent.md` or `frontend_agent.md`. Write code adhering to strict TS types.
 
 ## Rigid Constraints
-1. **Atomic PRs Only**: Never generate more than 150 lines of code change in a single implementation plan.
-2. **Post-Implementation**: Always remind the user to run `./agents/skills/submit-task.sh` once code modifications are complete.
+
+### ⚡ CRITICAL: Branch & PR Workflow (Non-Negotiable)
+
+**ALL agent changes MUST follow this workflow:**
+
+1. **Create Feature Branch**: `git checkout -b PREFIX/kebab-case-name`
+   - Valid prefixes: `feat/`, `fix/`, `chore/`, `refactor/`, `docs/`
+   - ❌ **NEVER commit to `main` directly**
+   - ❌ **NEVER bypass this step**
+
+2. **Make Changes**: Implement feature/documentation/fix in the branch
+
+3. **Auto-Create PR**: Once changes are complete, run:
+   ```bash
+   ./agents/skills/submit-task.sh
+   ```
+   - This script validates branch name
+   - Stages & commits all changes
+   - Pushes to GitHub
+   - Auto-creates PR via GitHub CLI
+   - ❌ **NEVER manually push or create PR without this script**
+
+4. **Await Human Review**: 
+   - PR enters CI/CD pipeline (runs tests, linting, build)
+   - Code Reviewer gates on atomic constraints (<150 LOC, no breaking changes)
+   - Human maintainer approves or requests changes
+   - ❌ **NEVER merge to main without human approval**
+
+5. **Merge to Main**: Only human maintainer can merge after approval
+
+**If you fail to follow this workflow, the PR will be rejected automatically.**
+
+---
+
+### Core Agent Constraints
+
+1. **Atomic PRs Only**: Never generate more than 150 lines of code change in a single PR.
+2. **No Direct Main Commits**: If you detect you're on `main` branch, STOP immediately and create a dedicated feature branch.
 3. **Language**: Always generate code, architecture, and markdown files in strict English.
 4. **Strict Branch Naming**: When creating a new branch for a task, you MUST use lowercase prefixes followed by a forward slash and a kebab-case description. 
    - Valid prefixes: `feat/` (features), `fix/` (bug fixes), `chore/` (configs/maintenance), `refactor/` (code refactoring), `docs/` (documentation).
