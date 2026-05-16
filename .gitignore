@@ -1,21 +1,24 @@
-# Maven
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Dependencies
+node_modules/
+/backend/node_modules/
 
-# IDE
-.idea/
-*.iws
-*.iml
-*.ipr
-.vscode/
-.settings/
-.classpath
-.project
+# Production build outputs
+dist/
+/backend/dist/
 
-# Logs
-*.log
-
-# Docker
+# Environment variables (Sensitive Data)
 .env
+.env.local
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
