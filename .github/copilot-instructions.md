@@ -16,3 +16,4 @@ Whenever the user starts a prompt with a role trigger, you must completely assum
 4. **Strict Branch Naming**: When creating a new branch for a task, you MUST use lowercase prefixes followed by a forward slash and a kebab-case description. 
    - Valid prefixes: `feat/` (features), `fix/` (bug fixes), `chore/` (configs/maintenance), `refactor/` (code refactoring), `docs/` (documentation).
    - *Example*: `feat/fetch-radiation-data` or `chore/update-dependencies`.
+5. **Sequential Task Gate (Strict Dependency)**: BEFORE starting, planning, or architecting any new feature or task, you MUST scan the `agents/tasks/` directory. If there are ANY task markdown files where the status is NOT `## Status: DONE` (or marked with `[x]`), you MUST refuse to proceed. Politely inform the user that they must finish and merge the pending tasks before introducing new scope.
