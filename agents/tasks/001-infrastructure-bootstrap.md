@@ -1,6 +1,6 @@
 # Task 001: Infrastructure Bootstrap
 
-## Status: IN_PROGRESS
+## Status: DONE
 ## Assignee: Backend Agent
 ## Branch: `feat/bootstrap-agent-infrastructure`
 
@@ -10,9 +10,9 @@ Remove legacy Java, Cursor, and pipeline configurations. Initialize a clean Node
 ## Steps
 1. [x] Create branch `feat/bootstrap-agent-infrastructure`.
 2. [x] Remove legacy Java files, pipeline workflows, and `.cursor` directory.
-3. [ ] Initialize Node.js `package.json` in `/backend`.
-4. [ ] Create a basic Express server in TypeScript (`backend/src/server.ts`).
-5. [ ] Define initial shared domain models in `shared/types.ts`.
+3. [x] Initialize Node.js `package.json` in `/backend`.
+4. [x] Create a basic Express server in TypeScript (`backend/src/server.ts`).
+5. [x] Define initial shared domain models in `shared/types.ts`.
 
 ## Definition of Done (DOD)
 - Repository is clear of Java/Cursor artifacts.
