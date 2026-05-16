@@ -1,16 +1,26 @@
 #!/bin/bash
 
-# Exit immediately if a command exits with a non-zero status
 set -e
 
 # 1. Get the current branch name
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$BRANCH_NAME" == "main" ]; then
-    echo " [ERROR] You are on the main branch. Agents cannot submit from main."
+    echo "❌ [ERROR] You are on the main branch. Agents cannot submit from main."
     exit 1
 fi
 
+# 2. Validate Branch Naming Convention (Strict Regex)
+VALID_BRANCH_REGEX="^(feat|fix|chore|refactor|docs)\/[a-zA-Z0-9._-]+$"
+
+if [[ ! $BRANCH_NAME =~ $VALID_BRANCH_REGEX ]]; then
+    echo "❌ [ERROR] Branch name '$BRANCH_NAME' violates convention!"
+    echo "👉 Branch must start with: feat/, fix/, chore/, refactor/, or docs/"
+    echo "👉 Example: feat/solar-api-integration"
+    exit 1
+fi
+
+echo "🚀 [Agent Skill] Branch convention verified: $BRANCH_NAME"
 echo " [Agent Skill] Preparing to submit work from branch: $BRANCH_NAME"
 
 # 2. Automatically format a clean commit message if there are unstaged changes
