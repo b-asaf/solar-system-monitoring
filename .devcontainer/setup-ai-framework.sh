@@ -5,31 +5,45 @@ echo "========================================================="
 echo "  Initializing Cloud Environment & Linking AI Framework  "
 echo "========================================================="
 
-# 1. Navigate to the generic workspaces directory root
-# Codespaces clones your main repo under /workspaces/solar-system-monitoring
 cd /workspaces
 
-# 2. Clone the companion ai-framework repository alongside the codebase
+# 1. Clone or update the framework repository alongside the product repo
 if [ ! -d "ai-framework" ]; then
     echo "--> Cloning ai-framework repository..."
     git clone https://github.com/b-asaf/ai-framework.git ai-framework
 else
-    echo "--> ai-framework already exists locally, fetching latest changes..."
+    echo "--> ai-framework already exists locally, fetching updates..."
     cd ai-framework && git pull && cd /workspaces
 fi
 
-# 3. Connect the .opencode agent infrastructure to the target codebase
-echo "--> Syncing agent guidelines and orchestration constraints..."
+# 2. Setup directory linking
 cd /workspaces/solar-system-monitoring
-
-# Symlink the framework's .opencode configurations so local tools/CLI find them
 if [ -d "../ai-framework/.opencode" ]; then
     rm -rf .opencode
     ln -s /workspaces/ai-framework/.opencode .opencode
     echo "--> Successfully linked .opencode to active workspace."
 fi
 
-# 4. Install target code base workspace dependencies
+# 3. 🛡️ INJECT THE LOCAL GIT HOOK (This solves the missing hook issue)
+echo "--> Injecting local git branch guardrails..."
+cat << 'EOF' > .git/hooks/pre-push
+#!/bin/bash
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    echo ""
+    echo "====================================================================="
+    echo " [CRITICAL ERROR] AI Agent execution halted: Direct pushes to 'main' are forbidden."
+    echo " Please checkout a feature branch and submit a manual-review Pull Request."
+    echo "====================================================================="
+    echo ""
+    exit 1
+fi
+EOF
+
+# Give the hook execution permissions inside the container
+chmod +x .git/hooks/pre-push
+
+# 4. Install project dependencies
 echo "--> Running target project environment package installations..."
 npm install
 

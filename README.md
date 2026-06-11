@@ -677,5 +677,3 @@ TBD
 ---
 
 ## Changelog
-
-- **v1.0.0 (May 16, 2026):** Initial architecture & README. Implementation in progress.
