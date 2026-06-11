@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "Product Code (solar-system-monitoring)",
+      "path": "."
+    },
+    {
+      "name": "AI Framework Configuration (ai-framework)",
+      "path": "../ai-framework"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true
+    }
+  }
+}
