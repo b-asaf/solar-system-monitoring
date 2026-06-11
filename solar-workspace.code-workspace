@@ -11,8 +11,8 @@
   ],
   "settings": {
     "files.exclude": {
-      "**/.git": true,
-      "workspace.colorTheme": "Github Dark Default"
-    }
+      "**/.git": true
+    },
+    "workbench.colorTheme": "GitHub Dark Default"
   }
 }

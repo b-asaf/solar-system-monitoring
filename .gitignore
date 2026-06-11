@@ -21,4 +21,5 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
-*.swp
+*.swp.opencode/
+package-lock.json
