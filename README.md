@@ -677,3 +677,22 @@ TBD
 ---
 
 ## Changelog
+
+---
+
+## Health Probe
+
+- **Endpoint:** `GET /api/health`
+- **Purpose:** Lightweight liveness/readiness check for orchestration, CI, and monitoring.
+- **Success (200):** JSON body containing `status`, `timestamp`, and `service` fields. See [requirements/health-probe-contract.md](requirements/health-probe-contract.md) for the full contract.
+
+Example:
+```bash
+# Start the backend in dev mode (from repo root)
+npm install --workspace=backend
+npm run dev --workspace=backend
+
+# Verify the health endpoint
+curl -fsS http://localhost:3000/api/health | jq
+```
+
